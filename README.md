@@ -1,21 +1,44 @@
-<h1> cypress-solutions</h1>
-<hr/></hr>
-A collection of cypress functions for specific scenarios
-<h2> Nested frames </h2>
-<b> PROBLEM: </b>Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue. 
 
+<h2> Nested frames </h2>
+
+<b> PROBLEM: </b>Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue. 
+<details>
+  <summary>html</summary>
+  
 ```html
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    
-  </body>
-</html>
+#document
+  <html>
+    <head>...</head>
+    <frameset rows="0,*" cols="*">
+      <frame name="bottom" src="./Common/blank.htm">
+      <frame name="Detail" src="./BN/sigin?loginErr=">
+        #document
+          <html>
+            <head>...</head>
+            <frameset rows="0,*" cols="*">
+              <frame name="bottom" src="./Common/blank.htm">
+              <frame name="Detail" src="./BN/1E/?myRn=">
+                #document
+                  <html>
+                    <head>...</head>
+                    <frameset rows="0,*" cols="*">
+                      <frame name="bottom" src="./Common/blank.htm">
+                      <frame name="Detail" src="./BN/2E/?myRn=">
+                        #document
+                          <html>
+                            <head>...</head>
+                            <frameset rows="0,*" cols="*">
+                              <frame name="bottom" src="./Common/blank.htm">
+                              <frame name="Detail" src="./BN/1E/?myRn=">
+                                #document
+                                  <!DOCTYPE html>
+                                  <html>
+                                    <head>...</head>
+                                    <body>
+                                      <div id="root">
 ```
+</details>
+
 <b> SOLUTION: </b>Recursive selector for variable number of nested frames. 
 
 ```typescript
