@@ -46,7 +46,7 @@ function loopFrames(frame-id) {
   return cy.get(frame-id).then((frame) => {
     const rootdiv = frame.contents().find('[id="root"]'); // we check if root div
     const nestedframe = frame.contents().find(frame-id); // and another frame are present
-    if (nestedframe.length > 0) loopFrames(nestedframe); // and recall the function if we find another frame
+    if (nestedframe.length > 0) loopFrames(nestedframe); // and recall function if we find another frame
     else cy.wrap(rootdiv); // finally, we return the rootdiv under the last frame
     });
 }
