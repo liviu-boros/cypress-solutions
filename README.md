@@ -1,14 +1,13 @@
-<h2>
-  <table {border= 10px solid black}
-    <tr>
+<details>
+  <summary>
+    <h2>
       <td>
         <img src="https://img.icons8.com/wired/452/04C38E/activity-feed.png" width="42" height="42">
       </td> 
-      <td>&nbsp;Nested frames&nbsp;
+      <td>
+        &nbsp;Nested frames&nbsp;
       </td>
-    </tr>
-  </table>
-</h2>
+  </summary>
 
 <b> PROBLEM: </b>Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue. 
 <details>
@@ -59,3 +58,5 @@ function loopFrames(frame) {
     });
 }
 ```
+
+</details>
