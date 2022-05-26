@@ -1,4 +1,5 @@
 ---
+
 <details open>
 <summary>
 <h1>
@@ -23,7 +24,11 @@ function loopFrames(frame) {
 ```
 
 <details>
-<summary>HTML</summary>
+<summary>
+<code>
+&nbsp;see HTML snippet&nbsp;
+</code>
+</summary>
 
 ```html
 #document
@@ -61,15 +66,16 @@ function loopFrames(frame) {
 </details>
              
 ---
+
 <details open>
 <summary>
 <h1>
 &nbsp; <img src="https://img.icons8.com/material/42/04C38E/stairs-up.png" width="42" height="42"> &nbsp; Traversal Locators
 </h1>
 </summary>
-  
+
 ---
-	
+
 * <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page>form>field for automation was taking a long time.
 * <b>SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Traversal locators anchoring on label elements syncing with manual test defintions. Writing automated scripts no longer required an inspection of html tags and manual tests could be quickly translated to automation logic.
 	
@@ -78,14 +84,32 @@ function inputByLabel(label: string, input: string) {
   cy.iframe('iframe.product-frame')
     .contains('label', label) // anchor label element
     .parentsUntil('ub-form-group') // go up the tree with till a common parent with the input field
-    .find('input[type=text]')
+    .find('input[type="text"]')
     .should('be.visible')
     .type(input);
+  
+function selectByLabel(label: string, option: string) {
+  cy.iframe('iframe.product-frame')
+    .contains('label', label) // anchor label element
+    .parentsUntil('ub-form-group') // go up the tree till a common parent with the input field
+    .find('[class="ub-combobox-icon"]')
+    .should('be.visible')
+    .click() // expand dropdown
+    .parentsUntil('ub-form-group')
+    .find(`ub-popover`)
+    .should('be.visible')
+    .contains(option)
+    .click({ scrollBehavior: 'center' }) // scroll option into view and click it
+    .blur(); // defocus to trigger saving of option in field
 }
 ```
 
 <details>
-	<summary>HTML</summary>
+<summary>
+<code>
+&nbsp;see HTML snippet&nbsp;
+</code>
+</summary>
 
 ```html
 <ub-form-group>
@@ -114,4 +138,5 @@ function inputByLabel(label: string, input: string) {
   </div>
 </ub-form-group>
 ```
+
 </details>
