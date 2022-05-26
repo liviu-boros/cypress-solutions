@@ -1,12 +1,16 @@
-<h2>
-	<img src="https://img.icons8.com/wired/42/04C38E/activity-feed.png" width="42" height="42">
-	&nbsp; Nested frames &nbsp;
-</h2>
-      
-<b> &nbsp;&nbsp;&nbsp;&nbsp;CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp; </b> Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue.
-	
-<b> &nbsp;&nbsp;&nbsp;&nbsp;SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b>Recursive selector for variable number of nested frames. 
-	
+---
+<details open>
+<summary>
+<h1>
+&nbsp; <img src="https://img.icons8.com/wired/42/04C38E/activity-feed.png"> &nbsp; Nested frames
+</h1>
+</summary>
+  
+---
+
+* <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue.
+* <b>SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Recursive selector for variable number of nested frames.
+
 ```typescript
 function loopFrames(frame) {
   return cy.get(frame).then((el) => {
@@ -17,6 +21,7 @@ function loopFrames(frame) {
     });
 }
 ```
+
 <details>
 <summary>HTML</summary>
 
@@ -53,19 +58,20 @@ function loopFrames(frame) {
                                       <div id="root">
 ```
 </details>
-
-<h2>
-	<img src="https://img.icons8.com/material/42/04C38E/stairs-up.png" width="42" height="42">
-	&nbsp; Traversal Locators &nbsp;
-</h2>
-      
-<details>
-  <summary>
-  </summary>
+</details>
+             
+---
+<details open>
+<summary>
+<h1>
+&nbsp; <img src="https://img.icons8.com/material/42/04C38E/stairs-up.png" width="42" height="42"> &nbsp; Traversal Locators
+</h1>
+</summary>
+  
+---
 	
-<b> CHALLENGE: </b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page>form>field for automation was taking a long time.
-
-<b> SOLUTION: </b> Traversal locators anchoring on label elements syncing with manual test defintions. Writing automated scripts no longer required an inspection of html tags and manual tests could be quickly translated to automation logic.
+* <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page>form>field for automation was taking a long time.
+* <b>SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Traversal locators anchoring on label elements syncing with manual test defintions. Writing automated scripts no longer required an inspection of html tags and manual tests could be quickly translated to automation logic.
 	
 ```typescript
 function inputByLabel(label: string, input: string) {
@@ -85,15 +91,15 @@ function inputByLabel(label: string, input: string) {
 <ub-form-group>
   #shadow-root (open)
     <div class="css-exg1y7">
-      <div class="css-13et6b">...</div> // icon
-      <div class="css-1ax517"> // label
+      <div class="css-13et6b">...</div> // <<< icon
+      <div class="css-1ax517"> // <<< label
         <ub-text type="label">
           #shadow-root (open)
             <label> "Sample Label"
             </label>
         </ub-text>
       </div>
-      <div class="css=16v52f"> // input
+      <div class="css=16v52f"> // <<< input
         <div class="css-4cf88t">
           <div class="css-16v3hw">
             <ub-edit-field editor="textbox" value="Sample Value">
