@@ -3,14 +3,10 @@
 	&nbsp; Nested frames &nbsp;
 </h2>
       
-<details>
-  <summary>
-  </summary>
+<b> &nbsp;&nbsp;&nbsp;&nbsp;CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp; </b> Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue.
 	
-<b> PROBLEM: </b>Application was creating a new frameset each time you navigated to a main page. Cypress does not support frames natively, a temporary workaround was needed until devs fixed the issue.
+<b> &nbsp;&nbsp;&nbsp;&nbsp;SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </b>Recursive selector for variable number of nested frames. 
 	
-	
-<b> SOLUTION: </b>Recursive selector for variable number of nested frames. 
 ```typescript
 function loopFrames(frame) {
   return cy.get(frame).then((el) => {
@@ -21,9 +17,8 @@ function loopFrames(frame) {
     });
 }
 ```
-	
 <details>
-	<summary>HTML</summary>
+<summary>HTML</summary>
 
 ```html
 #document
@@ -59,4 +54,58 @@ function loopFrames(frame) {
 ```
 </details>
 
+<h2>
+	<img src="https://img.icons8.com/material/42/04C38E/stairs-up.png" width="42" height="42">
+	&nbsp; Traversal Locators &nbsp;
+</h2>
+      
+<details>
+  <summary>
+  </summary>
+	
+<b> CHALLENGE: </b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page>form>field for automation was taking a long time.
+
+<b> SOLUTION: </b> Traversal locators anchoring on label elements syncing with manual test defintions. Writing automated scripts no longer required an inspection of html tags and manual tests could be quickly translated to automation logic.
+	
+```typescript
+function inputByLabel(label: string, input: string) {
+  cy.iframe('iframe.product-frame')
+    .contains('label', label) // anchor label element
+    .parentsUntil('ub-form-group') // go up the tree with till a common parent with the input field
+    .find('input[type=text]')
+    .should('be.visible')
+    .type(input);
+}
+```
+
+<details>
+	<summary>HTML</summary>
+
+```html
+<ub-form-group>
+  #shadow-root (open)
+    <div class="css-exg1y7">
+      <div class="css-13et6b">...</div> // icon
+      <div class="css-1ax517"> // label
+        <ub-text type="label">
+          #shadow-root (open)
+            <label> "Sample Label"
+            </label>
+        </ub-text>
+      </div>
+      <div class="css=16v52f"> // input
+        <div class="css-4cf88t">
+          <div class="css-16v3hw">
+            <ub-edit-field editor="textbox" value="Sample Value">
+              #shadow-root (open)
+                <div class="ub-edit-field__container">
+                  <input type="text">
+                </div>
+            </ub-edit-field>
+          </div>
+        </div>
+      </div>
+  </div>
+</ub-form-group>
+```
 </details>
