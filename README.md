@@ -1,3 +1,4 @@
+
 <details open> <summary><h1>&nbsp; <img src="https://img.icons8.com/wired/42/04C38E/activity-feed.png"> &nbsp;Nested frames</h1></summary>
   
   ---
@@ -16,7 +17,7 @@
   }
   ```
 
-  <details> <summary><code>&nbsp;see HTML snippet&nbsp;</code></summary>
+  <details> <summary><code>&nbsp;frameset HTML snippet&nbsp;</code></summary>
 
   ```html
   #document
@@ -56,24 +57,49 @@
              
 ---
 
-<details open> <summary><h1>&nbsp; <img src="https://img.icons8.com/material/42/04C38E/stairs-up.png"> &nbsp;Traversal Locators</h1></summary>
+![](https://flat.badgen.net/badge/icon/TRAVERSAL,LOCATORS?list=%20&icon=https://www.svgrepo.com/show/46599/stairs.svg&label&scale=3&color=444c56&labelColor=04C38E)
 
-  ---
+<details open> 
+<summary> </summary>
 
-  * <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page>form>field for automation was taking a long time.
+  * <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Application had hundreds of forms and wizards each with up to dozens of input fields. Identifying each field for each page, form and field for automation was taking a long time.
   * <b>SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Traversal locators anchoring on label elements syncing with manual test defintions. Writing automated scripts no longer required an inspection of html tags and manual tests could be quickly translated to automation logic.
     
   ```typescript
   function inputByLabel(label: string, input: string) {
     cy.iframe('iframe.product-frame')
       .contains('label', label) // anchor label element
-      .parentsUntil('ub-form-group') // go up the tree with till a common parent with the input field
+      .parentsUntil('ub-form-group') // go up the tree till a common parent with the input field
       .find('input[type="text"]')
       .should('be.visible')
       .type(input);
   }
   ```
-  
+
+  <details > <summary><code>&nbsp;input HTML snippet&nbsp;</code></summary>
+
+  ```html
+  <ub-form-group>
+    #shadow-root (open)
+      <div class="css-exg1y7">
+        <div class="css-13et6b">...</div> <!-- icon -->
+        <div class="css-1ax517"> <!-- label -->
+          <ub-text type="label">
+            #shadow-root (open)
+              <label> "Sample Label" </label>
+          </ub-text>
+        </div>
+        <div class="css=16v52f"> <!-- input -->
+          <div class="css-4cf88t">
+            <div class="css-16v3hw">
+              <ub-edit-field editor="textbox" value="Sample Value">
+                #shadow-root (open)
+                  <div class="ub-edit-field__container">
+                    <input type="text">
+                  </div>
+  ```
+  </details>
+
   ```typescript
   function selectByLabel(label: string, option: string) {
     cy.iframe('iframe.product-frame')
@@ -91,44 +117,20 @@
   }
   ```
 
-  <details > <summary><code>&nbsp;see Input HTML snippet&nbsp;</code></summary>
+  <details > <summary><code>&nbsp;dropdown HTML snippet&nbsp;</code></summary>
 
   ```html
   <ub-form-group>
     #shadow-root (open)
       <div class="css-exg1y7">
-        <div class="css-13et6b">...</div> // <<< icon
-        <div class="css-1ax517"> // <<< label
+        <div class="css-13et6b">...</div> <!-- icon -->
+        <div class="css-1ax517">...</div> <!-- label -->
           <ub-text type="label">
             #shadow-root (open)
               <label> "Sample Label" </label>
           </ub-text>
         </div>
-        <div class="css=16v52f"> // <<< input
-          <div class="css-4cf88t">
-            <div class="css-16v3hw">
-              <ub-edit-field editor="textbox" value="Sample Value">
-                #shadow-root (open)
-                  <div class="ub-edit-field__container">
-                    <input type="text">
-                  </div>
-  ```
-  </details>
-
-  <details > <summary><code>&nbsp;see Dropdown HTML snippet&nbsp;</code></summary>
-
-  ```html
-  <ub-form-group>
-    #shadow-root (open)
-      <div class="css-exg1y7">
-        <div class="css-13et6b">...</div> // <<< icon
-        <div class="css-1ax517">...</div> // <<< label
-          <ub-text type="label">
-            #shadow-root (open)
-              <label> "Sample Label" </label>
-          </ub-text>
-        </div>
-        <div class="css=16v52q"> // <<< dropdown
+        <div class="css=16v52q"> <!-- dropdown -->
           <div class="css=4cf88t">
             <div class="css=16v52q">
               <ub-edit-field>
@@ -150,3 +152,54 @@
   </details>
 
 </details>
+
+---
+
+<details open> <summary> <h1> &nbsp; <img src="https://img.icons8.com/external-smashingstocks-glyph-smashing-stocks/62/04C38E/external-drugs-emergency-and-help-center-smashingstocks-glyph-smashing-stocks.png"> &nbsp;Wrappers
+ </h1></summary> 
+  
+  ---
+
+  * <b>CHALLENGE&nbsp;&nbsp;&nbsp;&nbsp;</b> Faster and streamlined data input and assertion for forms and wizards
+  * <b>SOLUTION&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> Helper input and assertion functions that take objects defining all data as parameters
+
+  <details> <summary><code>&nbsp;interface, types and objects&nbsp;</code></summary>
+
+  ```typescript
+  type fieldType = 'input' | 'dropdown' | 'date' | 'button';
+  type fieldAction  = 'click' | 'type' | 'select';
+
+  interface IField {
+    Type: fieldType,
+    Locator: string,
+    Action: fieldAction,
+    Context?: string,
+  }
+
+  type FieldObj = {[key: string]: IField};
+
+  var Form : FieldObj = {
+    'First Name': { Type: 'input', Action: 'type', Context: 'user has typed' },
+    'Last Name': { Type: 'input', Action: 'type', Context: 'user has typed' },
+    'Next': { Type: 'button', Action: 'click' },
+    'Location': { Type: 'dropdown', Action: 'select', Context: 'user has selected' },
+  }
+  ```
+  </details>
+
+  ```typescript
+  function FillForm(obj: Interface) {
+    cy.fixture(file).then((org: IOrganisation) => {
+      for (const [label, value] of Object.entries(org)) {
+        EstatesManager.Org_InputbyLabel(label, clear + value);
+      }
+      // EstatesManager.Org_SaveButton('enabled', 'click');
+      EstatesManager.Org_ClickHomeIcon();
+      EstatesManager.Org_SaveButton('enabled', 'click');
+    });
+  }
+  ```
+
+
+</details>
+             
