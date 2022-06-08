@@ -57,7 +57,7 @@
              
 ---
 
-![](https://flat.badgen.net/badge/icon/TRAVERSAL,LOCATORS?list=%20&icon=https://www.svgrepo.com/show/46599/stairs.svg&label&scale=3&color=444c56&labelColor=04C38E)
+![](https://flat.badgen.net/badge/icon/TRAVERSAL,LOCATORS?list=%20&icon=https://www.svgrepo.com/show/46599/stairs.svg&label&scale=3&color=22272e&labelColor=04C38E)
 
 <details open> 
 <summary> </summary>
