@@ -185,14 +185,12 @@ var Form : FieldObj = {
 </details>
 
 ```typescript
-function FillForm(obj: Interface) {
-  cy.fixture(file).then((org: IOrganisation) => {
-    for (const [label, value] of Object.entries(org)) {
-      EstatesManager.Org_InputbyLabel(label, clear + value);
+function FillForm(Form: FieldObj) {
+  cy.fixture(file).then((form: FieldObj) => {
+    for (const [label, value] of Object.entries(form)) {
+      
     }
-    // EstatesManager.Org_SaveButton('enabled', 'click');
-    EstatesManager.Org_ClickHomeIcon();
-    EstatesManager.Org_SaveButton('enabled', 'click');
+
   });
 }
 ``` 
