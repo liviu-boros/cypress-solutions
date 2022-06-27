@@ -176,21 +176,31 @@ type FieldObj = {[key: string]: IField};
 
 ```typescript
 var Form : FieldObj = {
-  'First Name': { Type: 'input', Action: 'type', Context: 'user has typed' },
-  'Last Name': { Type: 'input', Action: 'type', Context: 'user has typed' },
+  'First Name': { Type: 'input', Action: 'type', Context: 'type this' },
+  'Last Name': { Type: 'input', Action: 'type', Context: 'type this' },
+  'Location': { Type: 'dropdown', Action: 'select', Context: 'select this option' },
   'Next': { Type: 'button', Action: 'click' },
-  'Location': { Type: 'dropdown', Action: 'select', Context: 'user has selected' },
 }
 ```
 </details>
 
 ```typescript
 function FillForm(Form: FieldObj) {
-  cy.fixture(file).then((form: FieldObj) => {
-    for (const [label, value] of Object.entries(form)) {
-      
-    }
-
+  cy.fixture(file).then((Form: FieldObj) => {
+    for (const [key] of Object.entries(Form)) {
+      switch (Form[key].Type){
+        case 'input': {
+          inputByLabel(key, Form[key].Action, Form[key].Context)
+          break;
+        }
+        case 'dropdown': {
+          selectDropdownByLabel(key, Form[key].Action, Form[key].Context)
+          break;
+        }
+        case 'click': {
+          selectDropdownByLabel(key, Form[key].Action)
+          break;
+        }
   });
 }
 ``` 
